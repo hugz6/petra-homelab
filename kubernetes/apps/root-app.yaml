@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/hugz6/petra-homelab.git
     targetRevision: main
-    path: infrastructure
+    path: kubernetes/infrastructure
     directory:
       recurse: true
   destination:
