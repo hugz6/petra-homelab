@@ -4,7 +4,7 @@ metadata:
   name: metallb
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # Déploie en premier
+    argocd.argoproj.io/sync-wave: "5" # Déploie en premier
 spec:
   project: default
   source:
@@ -34,7 +34,7 @@ spec:
     namespace: metallb-system
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
