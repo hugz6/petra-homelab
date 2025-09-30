@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: longhorn
   namespace: argocd
+  annotations:
+    # Wave plus élevée que celle des pré-requis
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   project: default
   source:
@@ -44,4 +47,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - Replace=true
+      - ServerSideApply=true
