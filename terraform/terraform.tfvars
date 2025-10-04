@@ -21,9 +21,12 @@ vm_start_id = 900
 
 # ressources
 master_cores = 4
-master_memory = 4092
+master_memory = 7000
+master_count = 1
+
 worker_cores = 6
 worker_memory = 14192
+worker_count = 3
 
 vm_user = "ubuntu"
 vm_password = "password"

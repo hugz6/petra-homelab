@@ -1,4 +1,5 @@
 ---
+
 # geneve or vlan
 kube_ovn_network_type: geneve
 

@@ -1,4 +1,4 @@
-KUBE_VIP=192.168.0.200
+KUBE_VIP=192.168.0.100
 # Par défaut, on appelle la cible "help"
 .PHONY: help
 help:
@@ -28,6 +28,7 @@ setup-kubectl:
 	@ssh-keygen -f "/home/zeta/.ssh/known_hosts" -R "$(KUBE_VIP)"
 	@ssh ubuntu@$(KUBE_VIP) "sudo cp /etc/kubernetes/admin.conf /tmp/; sudo chmod 775 /tmp/admin.conf"
 	@scp ubuntu@$(KUBE_VIP):/tmp/admin.conf ~/.kube/config
+	@sed -i 's|server: https://127.0.0.1:6443|server: https://$(KUBE_VIP):6443|g' ~/.kube/config
 
 get-argocd-passwd:
 	@kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 --decode | xclip -sel clipboard
