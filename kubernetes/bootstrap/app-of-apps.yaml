@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/hugz6/petra-homelab
     targetRevision: HEAD
-    path: apps
+    path: kubernetes/apps
   destination:
     server: https://kubernetes.default.svc
     namespace: apps
