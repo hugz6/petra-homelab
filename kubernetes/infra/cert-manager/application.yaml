@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: v1.15.1
+      helm:
+        releaseName: cert-manager
+        values: |
+          installCRDs: true
+          hostAliases:
+          - ip: "192.168.0.110"
+            hostnames:
+            - "argocd.petra.ooo"
+    - repoURL: https://github.com/hugz6/petra-homelab.git
+      targetRevision: main
+      path: kubernetes/infra/cert-manager/clusterissuer/
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        maxDuration: 3m
