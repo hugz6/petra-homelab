@@ -13,16 +13,11 @@ spec:
       targetRevision: v1.15.1
       helm:
         releaseName: cert-manager
-        values: |
+        valuesObject:
           installCRDs: true
-          hostAliases:
-          - ip: "192.168.0.110"
-            hostnames:
-            - "argocd.petra.ooo"
     - repoURL: https://github.com/hugz6/petra-homelab.git
       targetRevision: main
       path: kubernetes/infra/cert-manager/clusterissuer/
-      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
