@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflared-tunnel
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://cloudflare.github.io/helm-charts
+      chart: cloudflare-tunnel
+      targetRevision: 0.3.2
+      helm:
+        valuesObject:
+          cloudflare:
+            account: 22c9bc8e7ccb51bfe0f191fb127a4520
+            secretName: tunnel-credentials
+            tunnelName: petra
+            tunnelId: abcee46e-83d9-4e6c-9960-350a1bbd3ad2
+        replicaCount: 1
+    - repoURL: https://github.com/hugz6/petra-homelab.git
+      targetRevision: main
+      path: kubernetes/infra/cloudflared/secrets/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cloudflare
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
